@@ -12,7 +12,7 @@ export default function DashboardView() {
     console.log(isError)
     console.log(isLoading)
 
-    return(
+    if(data) return(
         <>
             <h1 className="text-5xl font-black"> Mis Proyectos</h1>
             <p className="text-2xl font-light text-gray-500 mt-5">
@@ -27,7 +27,20 @@ export default function DashboardView() {
                     Nuevos Proyectos
                 </Link>
             </nav>
-
+            {data.length ? (
+               <p>Si hay proyectos</p>     
+            ):
+            (
+                <p className='text-center py-20'>No hay proyectos aún {''}
+                    <Link 
+                        to='/projects/create'
+                        className='text-fuchsia-500 font-bold'
+                    >
+                        Crear Proyecto
+                    </Link>
+                </p>
+            )
+            }
         </>
     )
 }
