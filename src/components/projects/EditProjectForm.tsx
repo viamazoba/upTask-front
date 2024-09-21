@@ -1,15 +1,11 @@
-import { Link, useNavigate } from "react-router-dom";
-import { useForm } from 'react-hook-form'
-import { useMutation } from "@tanstack/react-query";
-import { toast } from 'react-toastify'
-import ProjectForm from "@/components/projects/ProjectFrom";
+import { Link } from "react-router-dom";
+import ProjectForm from "./ProjectFrom";
 import { ProjectFormData } from "@/types/index";
-import { createProject } from "@/api/ProjectAPI";
+import { useForm } from "react-hook-form";
 
 
-export default function CreateProjectView() {
+export default function EditProjectForm() {
 
-    const navigate = useNavigate()
     const initialValues: ProjectFormData = {
         projectName: '',
         clientName: '',
@@ -20,25 +16,16 @@ export default function CreateProjectView() {
         defaultValues: { ...initialValues }
     })
 
-    const { mutate } = useMutation({
-        mutationFn: createProject,
-        onError: (error) => {
-            toast.error(error.message)
-        },
-        onSuccess: (data) => {
-            toast.success(data)
-            navigate('/')
-        }
-    })
+    const handleForm = () => {
 
-    const handleForm = (formData: ProjectFormData) => mutate(formData)
+    }
 
     return (
         <>
             <div className="max-w-3xl mx-auto">
-                <h1 className="text-5xl font-black"> Crear Proyecto</h1>
+                <h1 className="text-5xl font-black"> Editar Proyecto</h1>
                 <p className="text-2xl font-light text-gray-500 mt-5">
-                    Llena el siguiente formulario para crear un proyecto
+                    Llena el siguiente formulario para editar el proyecto
                 </p>
 
                 <nav className='my-5'>
