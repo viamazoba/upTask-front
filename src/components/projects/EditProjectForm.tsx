@@ -1,8 +1,10 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ProjectForm from "./ProjectFrom";
 import { Project, ProjectFormData } from "@/types/index";
 import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
+import { toast } from "react-toastify";
+import { updateProject } from "@/api/ProjectAPI";
 
 
 type EditProjectFormProps = {
@@ -18,17 +20,20 @@ export default function EditProjectForm({ data, projectId }: EditProjectFormProp
         description: data.description
     }
 
+    const navigate = useNavigate()
+
     const { register, handleSubmit, formState: { errors } } = useForm({
         defaultValues: { ...initialValues }
     })
 
     const { mutate } = useMutation({
         mutationFn: updateProject,
-        onError: () => {
-
+        onError: (error) => {
+            toast.error(error.message)
         },
-        onSuccess: () => {
-
+        onSuccess: (data) => {
+            toast.success(data)
+            navigate('/')
         }
     })
 
@@ -77,8 +82,4 @@ export default function EditProjectForm({ data, projectId }: EditProjectFormProp
             </div>
         </>
     )
-}
-
-function updateProject(variables: void): Promise<unknown> {
-    throw new Error("Function not implemented.");
 }
