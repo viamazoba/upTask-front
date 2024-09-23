@@ -11,11 +11,14 @@ export default function EditProjectView() {
     const { data, isError, isLoading } = useQuery({
         queryKey: ['editProject', projectId],
         queryFn: () => getProjectById(projectId),
-        retry: 3
+        retry: false
     })
+
+    console.log(isLoading)
+    console.log(data)
 
     if (isLoading) return 'Cargando ...'
     if (isError) return <Navigate to='/404' />
-    if (data) return <EditProjectView />
+    if (data) return <EditProjectView data={data} />
 
 }
