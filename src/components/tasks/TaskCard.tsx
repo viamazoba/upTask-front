@@ -2,6 +2,7 @@ import { Fragment } from 'react'
 import { Task } from "@/types/index"
 import { Menu, Transition } from "@headlessui/react"
 import { EllipsisVerticalIcon } from '@heroicons/react/20/solid'
+import { useNavigate } from 'react-router-dom'
 
 type TaskCardProps = {
     task: Task
@@ -10,6 +11,8 @@ type TaskCardProps = {
 export default function TaskCard({
     task
 }: TaskCardProps) {
+
+    const navigate = useNavigate()
 
     return (
         <li
@@ -43,13 +46,20 @@ export default function TaskCard({
                                 </button>
                             </Menu.Item>
                             <Menu.Item>
-                                <button type='button' className='block px-3 py-1 text-sm leading-6 text-gray-900'>
+                                <button
+                                    type='button'
+                                    className='block px-3 py-1 text-sm leading-6 text-gray-900'
+                                    onClick={() => navigate(location.pathname + `?editTask=${task._id}`)}
+                                >
                                     Editar Tarea
                                 </button>
                             </Menu.Item>
 
                             <Menu.Item>
-                                <button type='button' className='block px-3 py-1 text-sm leading-6 text-red-500'>
+                                <button
+                                    type='button'
+                                    className='block px-3 py-1 text-sm leading-6 text-red-500'
+                                >
                                     Eliminar Tarea
                                 </button>
                             </Menu.Item>
