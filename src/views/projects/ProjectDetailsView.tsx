@@ -7,6 +7,7 @@ import EditTaskData from "@/components/tasks/EditTaskData"
 import TaskModalDetails from "@/components/tasks/TaskModalDetails"
 import { useAuth } from "@/hooks/useAuth"
 import { isManager } from "@/utils/policies"
+import { useMemo } from "react"
 
 
 export default function ProjectDetailsView() {
@@ -23,8 +24,12 @@ export default function ProjectDetailsView() {
     })
 
 
+    const canEdit = useMemo(() => data?.manager === user?._id, [data, user])
+
     if (isLoading && authLoading) return 'Cargando ...'
     if (isError) return <Navigate to='/404' />
+
+
     if (data && user) return (
         <>
             <h1 className="text-5xl font-black">{data.projectName}</h1>
@@ -53,6 +58,7 @@ export default function ProjectDetailsView() {
 
             <TaskList
                 tasks={data.tasks}
+                canEdit={canEdit}
             />
 
             <AddTaskModal />
