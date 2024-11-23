@@ -21,6 +21,7 @@ export type UpdateCurrentUserPasswordForm = Pick<Auth, 'current_password' | 'pas
 
 
 export type ConfirmationToken = Pick<Auth, 'token'>
+export type CheckPasswordForm = Pick<Auth, 'password'>
 
 /** Users */
 export const userSchema = authSchema.pick({
