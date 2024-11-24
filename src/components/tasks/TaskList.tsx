@@ -1,4 +1,4 @@
-import { Project, ProjectFormData, Task, TaskStatus } from "@/types/index"
+import { Project, TaskProject, TaskStatus } from "@/types/index"
 import { DndContext, DragEndEvent } from "@dnd-kit/core"
 import TaskCard from "./TaskCard"
 import { statusTranslations } from "@/locales/es"
@@ -9,12 +9,12 @@ import { toast } from "react-toastify"
 import { useParams } from "react-router-dom"
 
 type TaskListProps = {
-    tasks: Task[]
+    tasks: TaskProject[]
     canEdit: boolean
 }
 
 type GroupTasks = {
-    [key: string]: Task[]
+    [key: string]: TaskProject[]
 }
 
 const initialStatusGroups: GroupTasks = {
@@ -69,8 +69,8 @@ export default function TaskList({
 
             mutate({ projectId, taskId, status })
 
-            queryClient.setQueryData(['project', projectId], (prevData) => {
-                const updatedTasks = prevData.tasks.map((task: Task) => {
+            queryClient.setQueryData(['project', projectId], (prevData: Project) => {
+                const updatedTasks = prevData.tasks.map((task) => {
                     if (task._id === taskId) {
                         return {
                             ...task,
